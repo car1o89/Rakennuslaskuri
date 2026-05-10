@@ -106,7 +106,8 @@ const price = document.getElementById('price').value;
 const total = volume * price;
 
     document.getElementById('result').innerHTML =
-      'Tarvitset noin ' + volume.toFixed(2) + ' m³ betonia';
+  'Tarvitset noin ' + volume.toFixed(2) + ' m³ betonia<br><br>' +
+  'Arvioitu hinta: ' + total.toFixed(2) + ' €';
   }
 </script>
 
