@@ -1,99 +1,141 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RakennusLaskuri.fi - Betonilaskuri</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RakennusLaskuri.fi | Betonilaskuri, perustuslaskuri ja rakennuskustannukset</title>
+  <meta name="description" content="Ilmainen rakennuslaskuri Suomessa. Laske betonin määrä, betonin hinta, perustuksen arvioitu hinta, terassin kustannukset ja remonttibudjetti helposti.">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      background: #f3f4f6;
       color: #111827;
     }
 
     header {
-      background: #111827;
+      background: linear-gradient(135deg, #111827, #1f2937);
       color: white;
-      padding: 50px 20px;
+      padding: 70px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 42px;
+      font-size: 46px;
       margin: 0;
     }
 
     header p {
-      font-size: 18px;
+      font-size: 19px;
       color: #d1d5db;
+      max-width: 760px;
+      margin: 16px auto 0;
+      line-height: 1.6;
+    }
+
+    nav {
+      background: white;
+      padding: 14px 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      margin: 8px 10px;
+      color: #111827;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
     }
 
     .container {
-      max-width: 950px;
+      max-width: 1100px;
       margin: auto;
-      padding: 25px;
+      padding: 24px;
     }
 
     .card {
       background: white;
       border-radius: 18px;
-      padding: 25px;
-      margin-top: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      padding: 26px;
+      margin-top: 26px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     }
 
     h2 {
       margin-top: 0;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    p, li {
+      line-height: 1.7;
+      color: #374151;
     }
 
     label {
-      font-weight: bold;
       display: block;
       margin-top: 15px;
+      font-weight: bold;
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 13px;
-      margin-top: 6px;
+      margin-top: 7px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #cbd5e1;
       font-size: 16px;
-      box-sizing: border-box;
     }
 
     button {
-      margin-top: 25px;
       width: 100%;
       background: #111827;
       color: white;
-      border: none;
       padding: 16px;
+      border: none;
       border-radius: 12px;
       font-size: 18px;
+      margin-top: 22px;
       cursor: pointer;
+      font-weight: bold;
     }
 
     button:hover {
-      background: #1f2937;
+      background: #374151;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
     }
 
     .result {
-      margin-top: 25px;
-      padding: 20px;
+      margin-top: 22px;
       background: #ecfdf5;
       border-left: 5px solid #10b981;
+      padding: 20px;
       border-radius: 12px;
-      font-size: 18px;
-      line-height: 1.7;
+      line-height: 1.8;
       display: none;
+      font-size: 17px;
     }
 
-    .info {
-      line-height: 1.7;
-      color: #374151;
+    .small-card {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
     }
 
     .cta {
@@ -106,9 +148,17 @@
       color: #d1d5db;
     }
 
+    .warning {
+      background: #fffbeb;
+      border-left: 5px solid #f59e0b;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 18px;
+    }
+
     footer {
       text-align: center;
-      padding: 30px;
+      padding: 40px 20px;
       color: #6b7280;
     }
   </style>
@@ -118,102 +168,241 @@
 
 <header>
   <h1>RakennusLaskuri.fi</h1>
-  <p>Laske betonin määrä ja arvioitu hinta helposti</p>
+  <p>Laske betonin määrä, perustuksen hinta, terassin kustannukset ja remontin arvio helposti. Ilmainen rakennuslaskuri Suomen markkinoille.</p>
 </header>
+
+<nav>
+  <a href="#betoni">Betonilaskuri</a>
+  <a href="#perustus">Perustus</a>
+  <a href="#terassi">Terassi</a>
+  <a href="#remontti">Remontti</a>
+  <a href="#tarjous">Pyydä tarjous</a>
+</nav>
 
 <div class="container">
 
-  <div class="card">
+  <div class="card" id="betoni">
     <h2>Betonilaskuri</h2>
-    <p class="info">
-      Syötä mitat metreinä. Laskuri arvioi betonin määrän, hinnan ja lisää mukaan 10% varmuusvaran.
-    </p>
+    <p>Laske betonin määrä, arvioitu hinta ja tarvittavien betonisäkkien määrä.</p>
 
     <label>Pituus (m)</label>
-    <input type="number" id="length" placeholder="Esim. 10">
+    <input type="number" id="b_length" placeholder="Esim. 10">
 
     <label>Leveys (m)</label>
-    <input type="number" id="width" placeholder="Esim. 6">
+    <input type="number" id="b_width" placeholder="Esim. 6">
 
     <label>Korkeus / paksuus (h) (m)</label>
-    <input type="number" id="height" placeholder="Esim. 0.12">
+    <input type="number" id="b_height" placeholder="Esim. 0.12">
 
     <label>Betonin hinta €/m³</label>
-    <input type="number" id="price" value="160">
+    <input type="number" id="b_price" value="160">
 
-    <label>Lisätäänkö 10% varmuusvara?</label>
-    <select id="extra">
-      <option value="yes">Kyllä</option>
-      <option value="no">Ei</option>
+    <label>Betonisäkin koko</label>
+    <select id="b_bag">
+      <option value="25">25 kg säkki</option>
+      <option value="40">40 kg säkki</option>
     </select>
 
-    <button onclick="calculate()">Laske betonin määrä</button>
+    <button onclick="calculateConcrete()">Laske betonin määrä</button>
+    <div class="result" id="concreteResult"></div>
+  </div>
 
-    <div class="result" id="result"></div>
+  <div class="card" id="perustus">
+    <h2>Perustuksen hinta</h2>
+    <p>Laske karkea arvio perustuksen hinnasta pinta-alan perusteella.</p>
+
+    <label>Rakennuksen pinta-ala (m²)</label>
+    <input type="number" id="p_area" placeholder="Esim. 120">
+
+    <label>Hinta-arvio €/m²</label>
+    <input type="number" id="p_price" value="180">
+
+    <button onclick="calculateFoundation()">Laske perustuksen hinta</button>
+    <div class="result" id="foundationResult"></div>
+  </div>
+
+  <div class="card" id="terassi">
+    <h2>Terassin kustannuslaskuri</h2>
+    <p>Laske terassin karkea kustannusarvio materiaalin ja koon perusteella.</p>
+
+    <label>Terassin pinta-ala (m²)</label>
+    <input type="number" id="t_area" placeholder="Esim. 30">
+
+    <label>Hinta-arvio €/m²</label>
+    <input type="number" id="t_price" value="120">
+
+    <button onclick="calculateTerrace()">Laske terassin hinta</button>
+    <div class="result" id="terraceResult"></div>
+  </div>
+
+  <div class="card" id="remontti">
+    <h2>Remonttibudjetti</h2>
+    <p>Laske karkea remontin kustannusarvio.</p>
+
+    <label>Remontoitava pinta-ala (m²)</label>
+    <input type="number" id="r_area" placeholder="Esim. 60">
+
+    <label>Remontin taso</label>
+    <select id="r_level">
+      <option value="400">Kevyt remontti noin 400 €/m²</option>
+      <option value="800">Keskitaso noin 800 €/m²</option>
+      <option value="1400">Laaja remontti noin 1400 €/m²</option>
+    </select>
+
+    <button onclick="calculateRenovation()">Laske remontin hinta</button>
+    <div class="result" id="renovationResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>Suosittuja rakennuskustannuksia Suomessa</h2>
+
+    <div class="grid">
+      <div class="small-card">
+        <h3>Pieni betonilaatta</h3>
+        <p>Arvio noin 700–1500 €</p>
+      </div>
+
+      <div class="small-card">
+        <h3>Autotallin perustus</h3>
+        <p>Arvio noin 2000–6000 €</p>
+      </div>
+
+      <div class="small-card">
+        <h3>Omakotitalon perustus</h3>
+        <p>Arvio noin 8000–25000 €</p>
+      </div>
+
+      <div class="small-card">
+        <h3>Terassin rakentaminen</h3>
+        <p>Arvio noin 100–250 €/m²</p>
+      </div>
+    </div>
+
+    <div class="warning">
+      Huom: Kaikki hinnat ovat arvioita. Lopullinen hinta riippuu työmaasta, sijainnista, materiaalista, kuljetuksesta ja urakoitsijasta.
+    </div>
   </div>
 
   <div class="card">
     <h2>Miten betonin määrä lasketaan?</h2>
-    <p class="info">
+    <p>
       Betonin määrä lasketaan kaavalla:
-      <br><br>
-      <strong>pituus × leveys × korkeus = m³</strong>
-      <br><br>
+      <strong>pituus × leveys × korkeus = m³</strong>.
       Esimerkiksi 10 m × 6 m × 0.12 m = 7.2 m³ betonia.
     </p>
   </div>
 
   <div class="card">
-    <h2>Paljonko betoni maksaa?</h2>
-    <p class="info">
-      Betonin hinta Suomessa riippuu betonilaadusta, toimitusmatkasta, määrästä ja mahdollisesta pumppauksesta.
-      Tämä laskuri antaa vain karkean arvion.
+    <h2>Paljonko betoni maksaa Suomessa?</h2>
+    <p>
+      Betonin hinta riippuu betonilaadusta, määrästä, toimitusmatkasta, pumppauksesta ja paikallisesta saatavuudesta.
+      Tavallinen arvio on noin 120–220 €/m³, mutta todellinen hinta kannattaa aina tarkistaa toimittajalta.
     </p>
   </div>
 
-  <div class="card cta">
-    <h2>Tarvitsetko tarkemman hinnan?</h2>
-    <p>
-      Myöhemmin tähän lisätään tarjouspyyntölomake, jonka kautta käyttäjä voi pyytää hinnan urakoitsijalta.
-    </p>
+  <div class="card cta" id="tarjous">
+    <h2>Pyydä tarjous</h2>
+    <p>Jätä yhteystiedot ja projektin tiedot. Tämä lomake ei vielä lähetä viestiä, mutta seuraavassa vaiheessa siihen lisätään toimiva lähetys.</p>
+
+    <input type="text" placeholder="Nimi">
+    <input type="email" placeholder="Sähköposti">
+    <input type="tel" placeholder="Puhelin">
+    <textarea rows="5" placeholder="Kerro projektista"></textarea>
+
+    <button onclick="alert('Lomake lisätään seuraavassa vaiheessa.')">Lähetä tarjouspyyntö</button>
   </div>
 
 </div>
 
 <footer>
-  © 2026 RakennusLaskuri.fi
+  © 2026 RakennusLaskuri.fi — Ilmainen rakennuskustannusten laskuri
 </footer>
 
 <script>
-  function calculate() {
-    const length = parseFloat(document.getElementById("length").value);
-    const width = parseFloat(document.getElementById("width").value);
-    const height = parseFloat(document.getElementById("height").value);
-    const price = parseFloat(document.getElementById("price").value);
-    const extra = document.getElementById("extra").value;
+  function show(id, html) {
+    const box = document.getElementById(id);
+    box.style.display = "block";
+    box.innerHTML = html;
+  }
+
+  function calculateConcrete() {
+    const length = parseFloat(document.getElementById("b_length").value);
+    const width = parseFloat(document.getElementById("b_width").value);
+    const height = parseFloat(document.getElementById("b_height").value);
+    const price = parseFloat(document.getElementById("b_price").value);
+    const bag = parseFloat(document.getElementById("b_bag").value);
 
     if (!length || !width || !height || !price) {
-      alert("Täytä kaikki kentät.");
+      alert("Täytä kaikki betonilaskurin kentät.");
       return;
     }
 
-    let volume = length * width * height;
-    let finalVolume = volume;
+    const volume = length * width * height;
+    const safeVolume = volume * 1.10;
+    const total = safeVolume * price;
 
-    if (extra === "yes") {
-      finalVolume = volume * 1.10;
+    let bags = bag === 25 ? safeVolume * 80 : safeVolume * 50;
+
+    show("concreteResult",
+      "<strong>Betonin määrä:</strong> " + volume.toFixed(2) + " m³<br>" +
+      "<strong>10% varmuusvaralla:</strong> " + safeVolume.toFixed(2) + " m³<br>" +
+      "<strong>Arvioitu hinta:</strong> " + total.toFixed(2) + " €<br>" +
+      "<strong>Tarvittavat säkit:</strong> noin " + Math.ceil(bags) + " kpl"
+    );
+  }
+
+  function calculateFoundation() {
+    const area = parseFloat(document.getElementById("p_area").value);
+    const price = parseFloat(document.getElementById("p_price").value);
+
+    if (!area || !price) {
+      alert("Täytä perustuksen tiedot.");
+      return;
     }
 
-    const totalPrice = finalVolume * price;
+    const total = area * price;
 
-    const resultBox = document.getElementById("result");
-    resultBox.style.display = "block";
+    show("foundationResult",
+      "<strong>Perustuksen arvioitu hinta:</strong> " + total.toFixed(0) + " €<br>" +
+      "<strong>Pinta-ala:</strong> " + area + " m²<br>" +
+      "<strong>Käytetty hinta:</strong> " + price + " €/m²"
+    );
+  }
 
-    resultBox.innerHTML =
-      "<strong>Betonin määrä:</strong> " + volume.toFixed(2) + " m³<br>" +
-      "<strong>Varmuusvaran kanssa:</strong> " + finalVolume.toFixed(2) + " m³<br>" +
-      "<strong>Arvioitu hinta:</strong> " + totalPrice.toFixed(2) + " €<br><br>" +
-      "Huom: Lopullinen hinta voi muuttua kuljetuksen, pumppauksen ja betonilaadun mukaan.";
+  function calculateTerrace() {
+    const area = parseFloat(document.getElementById("t_area").value);
+    const price = parseFloat(document.getElementById("t_price").value);
+
+    if (!area || !price) {
+      alert("Täytä terassin tiedot.");
+      return;
+    }
+
+    const total = area * price;
+
+    show("terraceResult",
+      "<strong>Terassin arvioitu hinta:</strong> " + total.toFixed(0) + " €<br>" +
+      "<strong>Pinta-ala:</strong> " + area + " m²<br>" +
+      "<strong>Käytetty hinta:</strong> " + price + " €/m²"
+    );
+  }
+
+  function calculateRenovation() {
+    const area = parseFloat(document.getElementById("r_area").value);
+    const level = parseFloat(document.getElementById("r_level").value);
+
+    if (!area || !level) {
+      alert("Täytä remontin tiedot.");
+      return;
+    }
+
+    const total = area * level;
+
+    show("renovationResult",
+      "<strong>Remontin arvioitu hinta:</strong> " + total.toFixed(0) + " €<br>" +
+      "<strong>Pinta-ala:</strong> " + area + " m²<br>" +
+      "<strong>Käytetty hinta:</strong> " + level + " €/m²"
+    );
   }
 </script>
 
