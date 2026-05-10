@@ -83,8 +83,11 @@
     <label>Leveys (m)</label>
     <input type="number" id="width">
 
-    <label>Paksuus (m)</label>
+    <label>Korkeus (h)</label>
     <input type="number" id="height">
+
+    <label>Betonin hinta €/m³</label>
+<input type="number" id="price">
 
     <button onclick="calculate()">Laske</button>
 
@@ -99,6 +102,8 @@
     const height = document.getElementById('height').value;
 
     const volume = length * width * height;
+const price = document.getElementById('price').value;
+const total = volume * price;
 
     document.getElementById('result').innerHTML =
       'Tarvitset noin ' + volume.toFixed(2) + ' m³ betonia';
